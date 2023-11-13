@@ -1,6 +1,5 @@
 #include "shell.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -9,57 +8,64 @@
 #define MAX_INPUT_SIZE 1024
 #define MAX_ARGS 64
 
-int main(void)
+void displayPrompt(void)
 {
-	char input[MAX_INPUT_SIZE];
+	printf("#cisfun$ ");
+}
 
-	while (1)
+void tokenizeInput(char *input, char *args[])
+{
+	char *token = strtok(input, " ");
+	int i = 0;
+
+	while (token != NULL)
 	{
-		printf("#cisfun$ ");
-		fgets(input, sizeof(input), stdin);
+		args[i] = token;
+		token = strtok(NULL, " ");
+		i++;
+	}
+	args[i] = NULL;
+}
+void executeCommand(char *args[])
+{
+	pid_t pid = fork();
 
-		if (strcmp(input, "exit\n") == 0)
-		{
-			printf("Exiting shell...\n");
-			break;
-		}
-
-		input[strlen(input) - 1] = '\0';
-
-		char *token = strtok(input, " ");
-		char *args[MAX_ARGS];
-
-		int i = 0;
-
-		while (token != NULL)
-		{
-			args[i] = token;
-			token = strtok(NULL, " ");
-			i++;
-		}
-
-		args[i] = NULL;
-
-		pid_t pid = fork();
-
-		if (pid == -1)
+	if (pid == -1)
+	{
+		perror("./hsh");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		if (execvp(args[0], args) == -1)
 		{
 			perror("./hsh");
 			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			if (execvp(args[0], args) == -1)
-			{
-				perror("./hsh");
-				exit(EXIT_FAILURE);
-			}
 		}
 		else
 		{
 			wait(NULL);
 		}
 	}
+}
+int main(void)
+{
+	char input[MAX_INPUT_SIZE];
 
+	while (1)
+	{
+		displayPrompt();
+		fgets(input, sizeof(input), stdin);
+		if (strcmp(input, "exit\n") == 0)
+		{
+			printf("Exiting shell...\n");
+			break;
+		}
+		input[strlent(input) - 1] = '\0';
+		char *args[MAX_ARGS];
+
+		tokenizeInput(input, args);
+		executeCommand(args);
+	}
 	return (0);
 }
