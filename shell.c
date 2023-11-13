@@ -1,26 +1,98 @@
 #include "shell.h"
 
-void print_prompt(void)
+void runShell(void)
 {
-	//Implementation of print_prompt
+	char input[MAX_INPUT_SIZE];
+
+	while (1)
+	{
+		displayPrompt();
+		fgets(input, sizeof(input), stdin);
+
+	if (strcmp(input, "exit\n") == 0)
+	
+	{
+		printf("Exiting shell...\n");
+		break;
+	}
+
+	else if (strcmp(input, "env\n") == 0)
+	
+	{
+		handleEnvCommand();
+	}
+        
+	else
+        
+	{
+            
+		input[strlen(input) - 1] = '\0'; /* Removing the newline character */
+
+	char *token = strtok(input, " ");
+	char *args[MAX_ARGS];
+
+	int i = 0;
+	while (token != NULL)
+		{
+			args[i] = token;
+			token = strtok(NULL, " ");
+			i++;
+		}
+			args[i] = NULL;
+
+			executeCommand(args);
+		}
+	}
 }
 
-char *read_input(void)
+void displayPrompt(void)
 {
-	//Implementation of read_input
+	printf("$ ");
 }
 
-char **tokenize_input(char *input)
+void tokenizeInput(char *input, char *args[])
 {
-	//Implementation of tokenize_input
+	char *token = strtok(input, " ");
+	int i = 0;
+	while (token != NULL)
+	{
+		args[i] = token;
+		token = strtok(NULL, " ");
+		i++;
+	}
+		args[i] = NULL;
 }
 
-int execute_command(char **args)
+void executeCommand(char *args[])
 {
-	//Implementation of execute_command
+	pid_t pid = fork();
+	if (pid == -1)
+	{
+		perror("./simple_shell");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		/* Child process */
+		if (execvp(args[0], args) == -1)
+	{
+		perror("./simple_shell");
+		exit(EXIT_FAILURE);
+	}
+}
+	else
+	{
+		/* Parent process */
+		wait(NULL);
+	}
 }
 
-void free_tokens(char **tokens)
+void handleEnvCommand(void)
 {
-	//Implementation of free_tokens
+	char **env = environ;
+	while (*env != NULL)
+	{
+		printf("%s\n", *env);
+		env++
+	}
 }
