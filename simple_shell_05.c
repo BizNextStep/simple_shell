@@ -8,77 +8,94 @@
 #define MAX_INPUT_SIZE 1024
 #define MAX_ARGS 64
 
+/**
+ * executeCommand - Executes the input command
+ * @args: The tokenized command
+ */
 void executeCommand(char *args[])
 {
-    pid_t pid = fork();
-    if (pid == -1)
-    {
-        perror("./simple_shell");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid == 0)
-    {
-        /* Child process */
-        if (execvp(args[0], args) == -1)
-        {
-            perror("./simple_shell");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else
-    {
-        /* Parent process */
-        wait(NULL);
-    }
+	pid_t pid = fork();
+	if (pid == -1)
+
+
+	{
+		perror("./simple_shell");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		/* Child process */
+		if (execvp(args[0], args) == -1)
+
+		{
+			perror("./simple_shell");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		/* Parent process */
+		wait(NULL);
+	}
 }
 
-void handleEnvCommand()
+/**
+ * handleEnvCommand - Handles the env command
+ */
+void handleEnvCommand(void)
 {
-    char **env = environ;
-    while (*env != NULL)
-    {
-        printf("%s\n", *env);
-        env++;
-    }
+	char **env = environ;
+	while (*env != NULL)
+
+	{
+		printf("%s\n", *env);
+		env++;
+	}
 }
 
+/**
+ * main - Entry point
+ *
+ * Return: Always 0
+ */
 int main(void)
 {
-    char input[MAX_INPUT_SIZE];
+	char input[MAX_INPUT_SIZE];
 
-    while (1)
-    {
-        printf("$ ");
-        fgets(input, sizeof(input), stdin);
+	while (1)
+	{
+		printf("$ ");
+		fgets(input, sizeof(input), stdin);
 
-        if (strcmp(input, "exit\n") == 0)
-        {
-            printf("Exiting shell...\n");
-            break;
-        }
-        else if (strcmp(input, "env\n") == 0)
-        {
-            handleEnvCommand();
-        }
-        else
-        {
-            input[strlen(input) - 1] = '\0'; /* Removing the newline character */
+		if (strcmp(input, "exit\n") == 0)
+		{
+			printf("Exiting shell...\n");
+			break;
+		}
+		else if (strcmp(input, "env\n") == 0)
+		{
+			handleEnvCommand();
+		}
+		else
+		{
+			input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 
-            char *token = strtok(input, " ");
-            char *args[MAX_ARGS];
+			char *token = strtok(input, " ");
+			char *args[MAX_ARGS];
 
-            int i = 0;
-            while (token != NULL)
-            {
-                args[i] = token;
-                token = strtok(NULL, " ");
-                i++;
-            }
-            args[i] = NULL;
+			int i = 0;
+			while (token != NULL)
 
-            executeCommand(args);
-        }
-    }
+			{
+					args[i] = token;
+					token = strtok(NULL, " ");
+					i++;
+			}
+					args[i] = NULL;
 
-    return (0);
+					executeCommand(args);
+		}
+	}
+
+	return (0);
 }

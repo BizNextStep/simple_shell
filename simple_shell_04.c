@@ -1,6 +1,7 @@
 #include "shell.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -17,41 +18,38 @@ int main(void)
 {
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
-	int status;
+		int status;
+		while (1)
 
-	while (1)
-	{
-		displayPrompt();
-		fgets(input, sizeof(input), stdin);
-
-		input[strlen(input) - 1] = '\0';
-
-		if (strcmp(input, "exit") == 0)
-		{
-			printf("Exiting shell...\n");
-			exit(EXIT_SUCCESS);
-		}
-
-		tokenizeInput(input, args);
-
-		pid_t pid = fork();
-		if (pid == -1)
 
 		{
-			perror("Fork failed");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			executeCommand(args);
-		}
-		else
-		{
-			wait(&status);
-		}
-	}
+			displayPrompt();
+			fgets(input, sizeof(input), stdin);
+			input[strlen(input) - 1] = '\0';
+			if (strcmp(input, "exit") == 0)
+			{
+				printf("Exiting shell...\n");
+				exit(EXIT_SUCCESS);
+			}
+			tokenizeInput(input, args);
+			pid_t pid = fork();
 
-	return (0);
+			if (pid == -1)
+
+			{
+				perror("Fork failed");
+				exit(EXIT_FAILURE);
+			}
+			else if (pid == 0)
+			{
+				executeCommand(args);
+			}
+			else
+			{
+				wait(&status);
+			}
+		}
+		return (0);
 }
 
 /**
@@ -69,15 +67,13 @@ void displayPrompt(void)
  */
 void tokenizeInput(char *input, char *args[])
 {
-	char *token = strtok(input, " ");
-	int i = 0;
+	char *token = strtok(input, " ")
+		int i = 0;
 	while (token != NULL)
-
 	{
 		args[i] = token;
 		token = strtok(NULL, " ");
 		i++;
-
 	}
 	args[i] = NULL;
 }
