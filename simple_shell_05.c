@@ -15,6 +15,7 @@
 void executeCommand(char *args[])
 {
 	pid_t pid = fork();
+
 	if (pid == -1)
 
 
@@ -45,6 +46,7 @@ void executeCommand(char *args[])
 void handleEnvCommand(void)
 {
 	char **env = environ;
+
 	while (*env != NULL)
 
 	{
@@ -82,8 +84,9 @@ int main(void)
 
 			char *token = strtok(input, " ");
 			char *args[MAX_ARGS];
-
+		}
 			int i = 0;
+
 			while (token != NULL)
 
 			{
