@@ -12,26 +12,28 @@
  * executeCommand - Executes the input command
  * @args: The tokenized command
  */
-void executeCommand(char *args[]);
+void executeCommand(char *args[])
+{
+	pid_t pid = fork();
 
-	if (pid == -1)
+	If(pid == -1)
+
 	{
 		perror("./simple_shell");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
-		/* Child process */
 		if (execvp(args[0], args) == -1)
+
 		{
 			perror("./simple_shell");
 			exit(EXIT_FAILURE);
 		}
-	}
-	else
-	{
-		/* Parent process */
-		wait(NULL);
+		else
+		}
+			wait(NULL);
+		}
 	}
 }
 
@@ -58,7 +60,6 @@ int main(void)
 {
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
-	char *token = strtok(input, " ");
 	int i = 0;
 	while (1)
 
@@ -79,9 +80,9 @@ int main(void)
 		{
 			input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 
-		char *token = strtok(input, " ");
-		char *args[MAX_ARGS];
+			char *token = strtok(input, " ");
 			while (token != NULL)
+
 			{
 				args[i] = token;
 				token = strtok(NULL, " ");
