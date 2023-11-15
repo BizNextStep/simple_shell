@@ -18,10 +18,9 @@ int main(void)
 {
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
-		int status;
+	int status;
+
 		while (1)
-
-
 		{
 			displayPrompt();
 			fgets(input, sizeof(input), stdin);
@@ -69,6 +68,7 @@ void tokenizeInput(char *input, char *args[])
 {
 	char *token = strtok(input, " ")
 		int i = 0;
+
 	while (token != NULL)
 	{
 		args[i] = token;

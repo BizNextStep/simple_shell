@@ -1,20 +1,25 @@
 #include "shell.h"
-<<<<<<< HEAD
-=======
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
->>>>>>> 6376319c297e06e974332856a6c34fd6378963a8
 
 #define MAX_INPUT_SIZE 1024
 #define MAX_ARGS 64
-
+/**
+ * displayPrompt - displays prompt to input command.
+ */
 void displayPrompt(void)
 {
 	printf("#cisfun$ ");
 }
+
+/**
+ * tokenizeInput - Breaks string into small input using delimeters
+ * @input: parameter.
+ * @args: parameter..
+ */
 
 void tokenizeInput(char *input, char *args[])
 {
@@ -29,6 +34,10 @@ void tokenizeInput(char *input, char *args[])
 	}
 	args[i] = NULL;
 }
+/**
+ * executeCommand - executes command passed into the shell
+ * @args: parameter
+ */
 void executeCommand(char *args[])
 {
 	pid_t pid = fork();
@@ -51,6 +60,13 @@ void executeCommand(char *args[])
 		}
 	}
 }
+
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (success)
+ */
+
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];

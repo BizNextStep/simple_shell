@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * main - Entry point.
+ *
+ * Return: Success.
+ */
+
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];
@@ -10,9 +16,7 @@ int main(void)
 	{
 		printf(":) ");
 		fgets(input, sizeof(input), stdin);
-
 		input[strlen(input) - 1] = '\0';
-
 		char *token = strto(input " ");
 		int i = 0;
 
@@ -23,7 +27,6 @@ int main(void)
 			i++;
 		}
 		args[i] = NULL;
-
 		pid_t pid = fork();
 
 		if (pid == -1)

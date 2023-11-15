@@ -15,9 +15,8 @@
 void executeCommand(char *args[])
 {
 	pid_t pid = fork();
+
 	if (pid == -1)
-
-
 	{
 		perror("./simple_shell");
 		exit(EXIT_FAILURE);
@@ -26,7 +25,6 @@ void executeCommand(char *args[])
 	{
 		/* Child process */
 		if (execvp(args[0], args) == -1)
-
 		{
 			perror("./simple_shell");
 			exit(EXIT_FAILURE);
@@ -45,8 +43,8 @@ void executeCommand(char *args[])
 void handleEnvCommand(void)
 {
 	char **env = environ;
-	while (*env != NULL)
 
+	while (*env != NULL)
 	{
 		printf("%s\n", *env);
 		env++;
@@ -82,18 +80,17 @@ int main(void)
 
 			char *token = strtok(input, " ");
 			char *args[MAX_ARGS];
-
 			int i = 0;
+
 			while (token != NULL)
-
 			{
-					args[i] = token;
-					token = strtok(NULL, " ");
-					i++;
+				args[i] = token;
+				token = strtok(NULL, " ");
+				i++;
 			}
-					args[i] = NULL;
+			args[i] = NULL;
 
-					executeCommand(args);
+			executeCommand(args);
 		}
 	}
 
