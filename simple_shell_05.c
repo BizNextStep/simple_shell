@@ -12,13 +12,9 @@
  * executeCommand - Executes the input command
  * @args: The tokenized command
  */
-void executeCommand(char *args[])
-{
-	pid_t pid = fork();
+void executeCommand(char *args[]);
 
 	if (pid == -1)
-
-
 	{
 		perror("./simple_shell");
 		exit(EXIT_FAILURE);
@@ -27,7 +23,6 @@ void executeCommand(char *args[])
 	{
 		/* Child process */
 		if (execvp(args[0], args) == -1)
-
 		{
 			perror("./simple_shell");
 			exit(EXIT_FAILURE);
@@ -48,7 +43,6 @@ void handleEnvCommand(void)
 	char **env = environ;
 
 	while (*env != NULL)
-
 	{
 		printf("%s\n", *env);
 		env++;
@@ -63,8 +57,11 @@ void handleEnvCommand(void)
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];
-
+	char *args[MAX_ARGS];
+	char *token = strtok(input, " ");
+	int i = 0;
 	while (1)
+
 	{
 		printf("$ ");
 		fgets(input, sizeof(input), stdin);
@@ -82,21 +79,17 @@ int main(void)
 		{
 			input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 
-			char *token = strtok(input, " ");
-			char *args[MAX_ARGS];
-		}
-			int i = 0;
-
+		char *token = strtok(input, " ");
+		char *args[MAX_ARGS];
 			while (token != NULL)
-
 			{
-					args[i] = token;
-					token = strtok(NULL, " ");
-					i++;
+				args[i] = token;
+				token = strtok(NULL, " ");
+				i++;
 			}
-					args[i] = NULL;
+			args[i] = NULL;
 
-					executeCommand(args);
+			executeCommand(args);
 		}
 	}
 

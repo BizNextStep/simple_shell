@@ -1,21 +1,27 @@
 #include "shell.h"
 
+/**
+ * main - Entry point.
+ *
+ * Return: Success.
+ */
+
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
+	char *token = strtok(input, " ");
 	int status;
-
+	int i = 0;
+	pid_t pid;
 	while (1)
 	{
 		printf(":) ");
 		fgets(input, sizeof(input), stdin);
-
 		input[strlen(input) - 1] = '\0';
-
-		char *token = strto(input " ");
+		/***token = strtok(input, " ");
 		int i = 0;
-
+**/
 		while (token != NULL)
 		{
 			args[i] = token;
@@ -24,7 +30,7 @@ int main(void)
 		}
 		args[i] = NULL;
 
-		pid_t pid = fork();
+		pid = fork();
 
 		if (pid == -1)
 		{

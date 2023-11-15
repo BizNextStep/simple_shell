@@ -18,10 +18,10 @@ int main(void)
 {
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
-		int status;
+	int status;
+	pid_t pid;
+
 		while (1)
-
-
 		{
 			displayPrompt();
 			fgets(input, sizeof(input), stdin);
@@ -31,8 +31,9 @@ int main(void)
 				printf("Exiting shell...\n");
 				exit(EXIT_SUCCESS);
 			}
+			
 			tokenizeInput(input, args);
-			pid_t pid = fork();
+			pid = fork();
 
 			if (pid == -1)
 
@@ -67,8 +68,9 @@ void displayPrompt(void)
  */
 void tokenizeInput(char *input, char *args[])
 {
-	char *token = strtok(input, " ")
+	char *token = strtok(input, " ");
 		int i = 0;
+
 	while (token != NULL)
 	{
 		args[i] = token;
