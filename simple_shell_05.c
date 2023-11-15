@@ -16,8 +16,7 @@ void executeCommand(char *args[])
 {
 	pid_t pid = fork();
 
-	If(pid == -1)
-
+	if (pid == -1)
 	{
 		perror("./simple_shell");
 		exit(EXIT_FAILURE);
@@ -25,13 +24,13 @@ void executeCommand(char *args[])
 	else if (pid == 0)
 	{
 		if (execvp(args[0], args) == -1)
-
 		{
 			perror("./simple_shell");
 			exit(EXIT_FAILURE);
 		}
 		else
-		}
+		{
+
 			wait(NULL);
 		}
 	}
@@ -61,8 +60,9 @@ int main(void)
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
 	int i = 0;
-	while (1)
+	char *token; /* Move the declaration outside the loop */
 
+	while (1)
 	{
 		printf("$ ");
 		fgets(input, sizeof(input), stdin);
@@ -80,9 +80,8 @@ int main(void)
 		{
 			input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 
-			char *token = strtok(input, " ");
+			token = strtok(input, " ");
 			while (token != NULL)
-
 			{
 				args[i] = token;
 				token = strtok(NULL, " ");
