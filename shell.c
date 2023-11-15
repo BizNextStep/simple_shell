@@ -6,7 +6,9 @@
 void runShell(void)
 {
 	char input[MAX_INPUT_SIZE];
-
+	char *token = strtok(input, " ");
+	char *args[MAX_ARGS];
+	int i = 0;
 	while (1)
 	{
 		displayPrompt();
@@ -26,9 +28,9 @@ void runShell(void)
 	{
 		input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 	}
-	char *token = strtok(input, " ");
-	char *args[MAX_ARGS];
-	int i = 0;
+	/**char *token = strtok(input, " ");**/
+	/**char *args[MAX_ARGS];**/
+/**	int i = 0;**/
 
 	while (token != NULL)
 	{

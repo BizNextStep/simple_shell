@@ -70,6 +70,7 @@ void executeCommand(char *args[])
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];
+	char *args[MAX_ARGS];
 
 	while (1)
 	{
@@ -80,8 +81,8 @@ int main(void)
 			printf("Exiting shell...\n");
 			break;
 		}
-		input[strlent(input) - 1] = '\0';
-		char *args[MAX_ARGS];
+		input[strlen(input) - 1] = '\0';
+		/*char *args[MAX_ARGS];*/
 
 		tokenizeInput(input, args);
 		executeCommand(args);

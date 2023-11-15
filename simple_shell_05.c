@@ -59,7 +59,9 @@ void handleEnvCommand(void)
 int main(void)
 {
 	char input[MAX_INPUT_SIZE];
-
+	char *args[MAX_ARGS];
+	char *token = strtok(input, " ");
+	int i = 0;
 	while (1)
 	{
 		printf("$ ");
@@ -78,10 +80,10 @@ int main(void)
 		{
 			input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 
-			char *token = strtok(input, " ");
+		/**	char *token = strtok(input, " ");
 			char *args[MAX_ARGS];
 			int i = 0;
-
+			**/
 			while (token != NULL)
 			{
 				args[i] = token;
