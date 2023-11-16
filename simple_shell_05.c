@@ -1,12 +1,4 @@
 #include "shell.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-#define MAX_INPUT_SIZE 1024
-#define MAX_ARGS 64
 
 /**
  * executeCommand - Executes the input command
@@ -23,17 +15,16 @@ void executeCommand(char *args[])
 	}
 	else if (pid == 0)
 	{
-		/* Child process */
 		if (execvp(args[0], args) == -1)
 		{
 			perror("./simple_shell");
 			exit(EXIT_FAILURE);
 		}
-	}
-	else
-	{
-		/* Parent process */
-		wait(NULL);
+		else
+		{
+
+			wait(NULL);
+		}
 	}
 }
 
@@ -60,8 +51,9 @@ int main(void)
 {
 	char input[MAX_INPUT_SIZE];
 	char *args[MAX_ARGS];
-	char *token = strtok(input, " ");
 	int i = 0;
+	char *token; /* Move the declaration outside the loop */
+
 	while (1)
 	{
 		printf("$ ");
@@ -80,10 +72,7 @@ int main(void)
 		{
 			input[strlen(input) - 1] = '\0'; /* Removing the newline character */
 
-		/**	char *token = strtok(input, " ");
-			char *args[MAX_ARGS];
-			int i = 0;
-			**/
+			token = strtok(input, " ");
 			while (token != NULL)
 			{
 				args[i] = token;
