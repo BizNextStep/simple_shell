@@ -20,11 +20,4 @@ void tokenizeInput(char *input, char *args[]);
 void executeCommand(char *args[]);
 void handleEnvCommand(void);
 
-/* Other function prototypes */
-void print_prompt(void);
-char *read_input(void);
-char **tokenize_input(char *input);
-int execute_command(char **args);
-void free_tokens(char **tokens);
-
 #endif /* SHELL_H */
