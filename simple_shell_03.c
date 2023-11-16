@@ -19,9 +19,7 @@ int main(void)
 		printf(":) ");
 		fgets(input, sizeof(input), stdin);
 		input[strlen(input) - 1] = '\0';
-		/***token = strtok(input, " ");
-		int i = 0;
-**/
+
 		while (token != NULL)
 		{
 			args[i] = token;

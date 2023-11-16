@@ -82,8 +82,8 @@ int main(void)
 			break;
 		}
 		input[strlen(input) - 1] = '\0';
-		/*char *args[MAX_ARGS];*/
 
+		runShell();
 		tokenizeInput(input, args);
 		executeCommand(args);
 	}
